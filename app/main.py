@@ -1,28 +1,36 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
 class KeyValueStore:
     def __init__(self):
         self.store = {}
 
     def set_value(self, key, value):
-        """Store a value with the given key."""
         self.store[key] = value
-        print(f"Set {key} = {value}")
 
     def get_value(self, key):
-        """Retrieve a value by key."""
         return self.store.get(key, None)
 
 
-def main():
-    kv = KeyValueStore()
+kv = KeyValueStore()
 
-    
-    kv.set_value("name", "Alice")
-    kv.set_value("age", 25)
+@app.route("/set", methods=["POST"])
+def set_value():
+    data = request.get_json()
+    key = data.get("key")
+    value = data.get("value")
+    if key is None or value is None:
+        return jsonify({"error": "Key and value required"}), 400
+    kv.set_value(key, value)
+    return jsonify({"message": f"{key} set successfully"}), 200
 
-    print("name:", kv.get_value("name"))
-    print("age:", kv.get_value("age"))
-    print("city:", kv.get_value("city"))  # None چون وجود ندارد
-
+@app.route("/get/<key>", methods=["GET"])
+def get_value(key):
+    value = kv.get_value(key)
+    if value is None:
+        return jsonify({"error": "Key not found"}), 404
+    return jsonify({"key": key, "value": value}), 200
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)
