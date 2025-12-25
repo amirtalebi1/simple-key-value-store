@@ -34,3 +34,5 @@ def get_value(key):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+#API TESTED
