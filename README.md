@@ -1,17 +1,14 @@
-# Simple Key-Value Store (In-Memory)
+# Simple Key-Value Store
 
-This project is a simple in-memory key-value store developed as part of the Software Engineering course.
+This is a simple in-memory key-value store implemented in Python with a Flask API.
 
-## Project Description
-The goal of this project is to implement a simple service that stores data in memory using a dictionary-like structure.
-The service allows:
-- Storing a value using a key
-- Retrieving a value using a key
+## Features
+- Store and retrieve key-value pairs in memory
+- Flask API endpoints:
+  - `POST /set` - store a value
+  - `GET /get/<key>` - retrieve a value
 
-## Technical Requirements
-- Version control using Git and GitHub
-- Incremental development with clear commit history
-- Containerization using Docker
-
-## Development Process
-This project is developed step-by-step with incremental commits to demonstrate gradual progress.
+## Run with Docker
+1. Build Docker image:
+```bash
+docker build -t simple-kv-store .
